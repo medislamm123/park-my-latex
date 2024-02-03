@@ -25,4 +25,4 @@ def rephrase(text: str, modification_degree: Optional[str] = None) -> str:
         messages=[{"role": "user", "content": prompt + "\n" + text}],
     )
 
-    print(completion.choices[0].message)
+    return completion.choices[0].message.content
