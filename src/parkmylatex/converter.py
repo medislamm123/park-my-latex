@@ -14,7 +14,7 @@ client = OpenAI(api_key=api_key)
 def rephrase(text: str, modification_degree: Optional[str] = None) -> str:
     match modification_degree:
         case "correct-only":
-            prompt = ""
+            prompt = "Take this text and translate it to chinese:"  # "This is part of a latex document. You should correct only grave language errors, and return the corrected text. Ensure the latex code is correct. Here is the text:"
         case "correct-with-minor-changes":
             prompt = ""
         case _:

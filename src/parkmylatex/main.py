@@ -1,20 +1,22 @@
 import sys
 from pathlib import Path
+import argparse
 from parkmylatex.converter import rephrase
-
-modification_degree = "correct-only"
 
 
 def main():
-    try:
-        input_file = Path(sys.argv[1])
-        output_file = Path(sys.argv[2])
-    except:
-        print(
-            "An input or output file is missing."
-            "pdflatex path/to/input_file path/to/output_file"
-        )
-        return
+    parser = argparse.ArgumentParser(
+        description="A script for data processing")
+    parser.add_argument("input", help="Input file path")
+    parser.add_argument("output", help="Output file path")
+    parser.add_argument(
+        "-d", "--degree", help="Degree of correction", default="correct-only")
+
+    args = parser.parse_args()
+
+    input_file = Path(args.input)
+    output_file = Path(args.output)
+    modification_degree = args.degree
 
     with open(input_file, "r") as f:
         text = f.read()
