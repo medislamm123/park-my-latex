@@ -6,4 +6,9 @@ setup(
     packages=find_packages(where="src"),
     package_dir={"": "src"},
     install_requires=["openai", "pathlib", "dotenv"],
+    entry_points={
+        "console_scripts": [
+            "parkmylatex = parkmylatex.main:main",
+        ],
+    },
 )
