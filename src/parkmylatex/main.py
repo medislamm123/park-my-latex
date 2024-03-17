@@ -1,7 +1,7 @@
 import sys
 from pathlib import Path
 import argparse
-from parkmylatex.converter import rephrase
+from parkmylatex.converter import get_rephrased_doc
 
 
 def main():
@@ -20,7 +20,7 @@ def main():
 
     with open(input_file, "r") as f:
         text = f.read()
-        output = rephrase(text, modification_degree)
+        output = get_rephrased_doc(text, modification_degree)
 
     with open(output_file, "w") as f:
         f.write(output)
