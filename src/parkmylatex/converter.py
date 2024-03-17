@@ -30,6 +30,8 @@ def get_rephrased(text: str, modification_degree: Optional[str] = None) -> str:
     Example:
     >>> get_rephrased("This is a sample text to be rephrased.", modification_degree="correct-only")
     """
+    if text.strip() == "":
+        return text
     match modification_degree:
         case "correct-only":
             prompt = """
@@ -44,7 +46,10 @@ def get_rephrased(text: str, modification_degree: Optional[str] = None) -> str:
 
     completion = client.chat.completions.create(
         model="gpt-3.5-turbo",
-        messages=[{"role": "user", "content": prompt + "\n" + text}],
+        messages=[
+            {"role": "system", "content": prompt},
+            {"role": "user", "content": text},
+        ],
     )
 
     return completion.choices[0].message.content
@@ -56,9 +61,9 @@ def get_splits(text: str) -> List[str]:
 
 def get_rephrased_doc(text: str, modification_degree: str) -> str:
     """
-    Take all the given text, split it into smaller chunks, rephrase them, merge the rephrased splits.
+    Takes all the given text, split it into smaller chunks, rephrase them, merge the rephrased splits.
     """
 
     splits = get_splits(text)
-    rephrased_splits = [get_rephrased(split,modification_degree) for split in splits]
+    rephrased_splits = [get_rephrased(split, modification_degree) for split in splits]
     return "\n\n".join(rephrased_splits)
